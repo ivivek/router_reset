@@ -1,0 +1,19 @@
+#!/usr/bin/expect -f
+
+set send_slow {1 .1}
+proc send {ignore arg} {
+	sleep 1
+	exp_send -s -- $arg
+}
+
+set timeout 20
+
+# Set your router password here
+set pass "YOUR PASSWORD"
+set routercmd [lindex $argv 0]
+
+spawn ssh admin@192.168.1.1 $routercmd
+# If needed, change the below line to match the response of your router
+expect "admin@192.168.1.1's password:"
+send -- "$pass\r"
+expect eof
